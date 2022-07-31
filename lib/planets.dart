@@ -26,6 +26,16 @@ const midHeavenIndex = 14;
 
 List calculatePlanetPositions(
     year, month, day, hour, minute, longitude, latitude) {
+/*
+  ye 2022 
+  mo 7
+  da 30
+  ho 19
+  mi 6
+  lon -112.26531900608147
+  lat 33.582382999889354
+  res 145.87773551196665,4.963475718020265
+*/
   var julianDate = calculateJulianDate(year, month, day, hour, minute);
   var localSiderealTime =
       calculateLocalSiderealTime(julianDate, hour, minute, longitude);
