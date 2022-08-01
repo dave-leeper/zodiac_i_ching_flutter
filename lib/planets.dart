@@ -24,21 +24,9 @@ const midHeavenIndex = 14;
 * All value is expressed in degree, without Julian day.
 */
 
-List calculatePlanetPositions(
-    year, month, day, hour, minute, longitude, latitude) {
-/*
-  ye 2022 
-  mo 7
-  da 30
-  ho 19
-  mi 6
-  lon -112.26531900608147
-  lat 33.582382999889354
-  res 145.87773551196665,4.963475718020265
-*/
+List calculatePlanetPositions(year, month, day, hour, minute, longitude, latitude) {
   var julianDate = calculateJulianDate(year, month, day, hour, minute);
-  var localSiderealTime =
-      calculateLocalSiderealTime(julianDate, hour, minute, longitude);
+  var localSiderealTime = calculateLocalSiderealTime(julianDate, hour, minute, longitude);
   var planetPositions = List<double>.filled(15, 0.0);
   // Not used. DKL var date = year * 10000 + month * 100 + day * 1;
 
@@ -55,13 +43,13 @@ List calculatePlanetPositions(
   }
 
   var luna = calculatePositionOfLuna(julianDate);
-  planetPositions[11] = luna[0];
-  planetPositions[12] = luna[1];
+  planetPositions[lunarNodeIndex] = luna[0];
+  planetPositions[apogeeLongitudeIndex] = luna[1];
 
-  var obl = calculateOblique(julianDate);
-  var angle = calculateGeoPoint(localSiderealTime, latitude, obl);
-  planetPositions[13] = angle[0];
-  planetPositions[14] = angle[1];
+  var oblique = calculateOblique(julianDate);
+  var angle = calculateGeoPoint(localSiderealTime, latitude, oblique);
+  planetPositions[longitudeOfAscendantIndex] = angle[0];
+  planetPositions[midHeavenIndex] = angle[1];
 
   var dpsi = calculateNutation(julianDate) / 3600.0;
   for (var loop = 1; loop <= 12; loop++) {
@@ -79,16 +67,7 @@ double calculatePlanetPosition(julianDate, planetIndex) {
   var t = (julianDate - 2451545.0) / 36525.0;
   var t2 = (julianDate - 2451545.0) / 365250.0;
 
-  var C = [
-    0.00347,
-    0.00484,
-    0.00700,
-    0.01298,
-    0.01756,
-    0.02490,
-    0.03121,
-    0.03461
-  ];
+  var C = [0.00347, 0.00484, 0.00700, 0.01298, 0.01756, 0.02490, 0.03121, 0.03461];
   double dl;
   var epos = List<double>.filled(3, 0.0);
   var gpos = List<double>.filled(3, 0.0);
@@ -186,36 +165,36 @@ List<double> calculatePositionOfMoon(T) {
   mf[3] += 93.27210;
   mf[3] = mod360(mf[3]);
 
-  dl = 6.28876 * sin4deg(0 * mf[0] + 0 * mf[1] + 1 * mf[2] + 0 * mf[3]);
-  dl += 1.27401 * sin4deg(2 * mf[0] + 0 * mf[1] - 1 * mf[2] + 0 * mf[3]);
-  dl += 0.65831 * sin4deg(2 * mf[0] + 0 * mf[1] + 0 * mf[2] + 0 * mf[3]);
-  dl += 0.21362 * sin4deg(0 * mf[0] + 0 * mf[1] + 2 * mf[2] + 0 * mf[3]);
-  dl += -0.18512 * sin4deg(0 * mf[0] + 1 * mf[1] + 0 * mf[2] + 0 * mf[3]);
-  dl += -0.11433 * sin4deg(0 * mf[0] + 0 * mf[1] + 0 * mf[2] + 2 * mf[3]);
-  dl += 0.05879 * sin4deg(2 * mf[0] + 0 * mf[1] - 2 * mf[2] + 0 * mf[3]);
-  dl += 0.05707 * sin4deg(2 * mf[0] - 1 * mf[1] - 1 * mf[2] + 0 * mf[3]);
-  dl += 0.05332 * sin4deg(2 * mf[0] + 0 * mf[1] + 1 * mf[2] + 0 * mf[3]);
-  dl += 0.04576 * sin4deg(2 * mf[0] - 1 * mf[1] + 0 * mf[2] + 0 * mf[3]);
-  dl += -0.04092 * sin4deg(0 * mf[0] + 1 * mf[1] - 1 * mf[2] + 0 * mf[3]);
-  dl += -0.03472 * sin4deg(1 * mf[0] + 0 * mf[1] + 0 * mf[2] + 0 * mf[3]);
-  dl += -0.03038 * sin4deg(0 * mf[0] + 1 * mf[1] + 1 * mf[2] + 0 * mf[3]);
-  dl += 0.01533 * sin4deg(2 * mf[0] + 0 * mf[1] + 0 * mf[2] - 2 * mf[3]);
-  dl += -0.01253 * sin4deg(0 * mf[0] + 0 * mf[1] + 1 * mf[2] + 2 * mf[3]);
-  dl += 0.01098 * sin4deg(0 * mf[0] + 0 * mf[1] + 1 * mf[2] - 2 * mf[3]);
-  dl += 0.01067 * sin4deg(4 * mf[0] + 0 * mf[1] - 1 * mf[2] + 0 * mf[3]);
-  dl += 0.01003 * sin4deg(0 * mf[0] + 0 * mf[1] + 3 * mf[2] + 0 * mf[3]);
-  dl += 0.00855 * sin4deg(4 * mf[0] + 0 * mf[1] - 2 * mf[2] + 0 * mf[3]);
+  dl = 6.28876 * sinOfDegree(0 * mf[0] + 0 * mf[1] + 1 * mf[2] + 0 * mf[3]);
+  dl += 1.27401 * sinOfDegree(2 * mf[0] + 0 * mf[1] - 1 * mf[2] + 0 * mf[3]);
+  dl += 0.65831 * sinOfDegree(2 * mf[0] + 0 * mf[1] + 0 * mf[2] + 0 * mf[3]);
+  dl += 0.21362 * sinOfDegree(0 * mf[0] + 0 * mf[1] + 2 * mf[2] + 0 * mf[3]);
+  dl += -0.18512 * sinOfDegree(0 * mf[0] + 1 * mf[1] + 0 * mf[2] + 0 * mf[3]);
+  dl += -0.11433 * sinOfDegree(0 * mf[0] + 0 * mf[1] + 0 * mf[2] + 2 * mf[3]);
+  dl += 0.05879 * sinOfDegree(2 * mf[0] + 0 * mf[1] - 2 * mf[2] + 0 * mf[3]);
+  dl += 0.05707 * sinOfDegree(2 * mf[0] - 1 * mf[1] - 1 * mf[2] + 0 * mf[3]);
+  dl += 0.05332 * sinOfDegree(2 * mf[0] + 0 * mf[1] + 1 * mf[2] + 0 * mf[3]);
+  dl += 0.04576 * sinOfDegree(2 * mf[0] - 1 * mf[1] + 0 * mf[2] + 0 * mf[3]);
+  dl += -0.04092 * sinOfDegree(0 * mf[0] + 1 * mf[1] - 1 * mf[2] + 0 * mf[3]);
+  dl += -0.03472 * sinOfDegree(1 * mf[0] + 0 * mf[1] + 0 * mf[2] + 0 * mf[3]);
+  dl += -0.03038 * sinOfDegree(0 * mf[0] + 1 * mf[1] + 1 * mf[2] + 0 * mf[3]);
+  dl += 0.01533 * sinOfDegree(2 * mf[0] + 0 * mf[1] + 0 * mf[2] - 2 * mf[3]);
+  dl += -0.01253 * sinOfDegree(0 * mf[0] + 0 * mf[1] + 1 * mf[2] + 2 * mf[3]);
+  dl += 0.01098 * sinOfDegree(0 * mf[0] + 0 * mf[1] + 1 * mf[2] - 2 * mf[3]);
+  dl += 0.01067 * sinOfDegree(4 * mf[0] + 0 * mf[1] - 1 * mf[2] + 0 * mf[3]);
+  dl += 0.01003 * sinOfDegree(0 * mf[0] + 0 * mf[1] + 3 * mf[2] + 0 * mf[3]);
+  dl += 0.00855 * sinOfDegree(4 * mf[0] + 0 * mf[1] - 2 * mf[2] + 0 * mf[3]);
 
-  db = 5.12817 * sin4deg(0 * mf[0] + 0 * mf[1] + 0 * mf[2] + 1 * mf[3]);
-  db += 0.27769 * sin4deg(0 * mf[0] + 0 * mf[1] + 1 * mf[2] - 1 * mf[3]);
-  db += 0.28060 * sin4deg(0 * mf[0] + 0 * mf[1] + 1 * mf[2] + 1 * mf[3]);
-  db += 0.00882 * sin4deg(0 * mf[0] + 0 * mf[1] + 2 * mf[2] - 1 * mf[3]);
-  db += 0.01720 * sin4deg(0 * mf[0] + 0 * mf[1] + 2 * mf[2] + 1 * mf[3]);
-  db += 0.04627 * sin4deg(2 * mf[0] + 0 * mf[1] - 1 * mf[2] - 1 * mf[3]);
-  db += 0.05541 * sin4deg(2 * mf[0] + 0 * mf[1] - 1 * mf[2] + 1 * mf[3]);
-  db += 0.17324 * sin4deg(2 * mf[0] + 0 * mf[1] + 0 * mf[2] - 1 * mf[3]);
-  db += 0.03257 * sin4deg(2 * mf[0] + 0 * mf[1] + 0 * mf[2] + 1 * mf[3]);
-  db += 0.00927 * sin4deg(2 * mf[0] + 0 * mf[1] + 1 * mf[2] - 1 * mf[3]);
+  db = 5.12817 * sinOfDegree(0 * mf[0] + 0 * mf[1] + 0 * mf[2] + 1 * mf[3]);
+  db += 0.27769 * sinOfDegree(0 * mf[0] + 0 * mf[1] + 1 * mf[2] - 1 * mf[3]);
+  db += 0.28060 * sinOfDegree(0 * mf[0] + 0 * mf[1] + 1 * mf[2] + 1 * mf[3]);
+  db += 0.00882 * sinOfDegree(0 * mf[0] + 0 * mf[1] + 2 * mf[2] - 1 * mf[3]);
+  db += 0.01720 * sinOfDegree(0 * mf[0] + 0 * mf[1] + 2 * mf[2] + 1 * mf[3]);
+  db += 0.04627 * sinOfDegree(2 * mf[0] + 0 * mf[1] - 1 * mf[2] - 1 * mf[3]);
+  db += 0.05541 * sinOfDegree(2 * mf[0] + 0 * mf[1] - 1 * mf[2] + 1 * mf[3]);
+  db += 0.17324 * sinOfDegree(2 * mf[0] + 0 * mf[1] + 0 * mf[2] - 1 * mf[3]);
+  db += 0.03257 * sinOfDegree(2 * mf[0] + 0 * mf[1] + 0 * mf[2] + 1 * mf[3]);
+  db += 0.00927 * sinOfDegree(2 * mf[0] + 0 * mf[1] + 1 * mf[2] - 1 * mf[3]);
 
   w1 += dl + 5029.0966 / 3600.0 * T;
 
@@ -691,36 +670,36 @@ List<double> calculatePositionOfPlutoMee(T) {
   var pluto = mod360(238.96 + 144.9600 * T);
 
   // Pluto's Longitude
-  lo += -19.7998 * sin4deg(pluto * 1.0) + 19.8501 * cos4deg(pluto * 1.0);
-  lo += 0.8971 * sin4deg(pluto * 2.0) - 4.9548 * cos4deg(pluto * 2.0);
-  lo += 0.6111 * sin4deg(pluto * 3.0) + 1.2110 * cos4deg(pluto * 3.0);
-  lo += -0.3412 * sin4deg(pluto * 4.0) - 0.1896 * cos4deg(pluto * 4.0);
-  lo += 0.1293 * sin4deg(pluto * 5.0) - 0.0350 * cos4deg(pluto * 5.0);
-  lo += -0.0382 * sin4deg(pluto * 6.0) + 0.0309 * cos4deg(pluto * 6.0);
-  lo += 0.0204 * sin4deg(saturn - pluto) - 0.0100 * cos4deg(saturn - pluto);
-  lo += -0.0041 * sin4deg(saturn * 1.0) - 0.0051 * cos4deg(saturn * 1.0);
-  lo += -0.0060 * sin4deg(saturn + pluto) - 0.0033 * cos4deg(saturn + pluto);
+  lo += -19.7998 * sinOfDegree(pluto * 1.0) + 19.8501 * cosOfDegree(pluto * 1.0);
+  lo += 0.8971 * sinOfDegree(pluto * 2.0) - 4.9548 * cosOfDegree(pluto * 2.0);
+  lo += 0.6111 * sinOfDegree(pluto * 3.0) + 1.2110 * cosOfDegree(pluto * 3.0);
+  lo += -0.3412 * sinOfDegree(pluto * 4.0) - 0.1896 * cosOfDegree(pluto * 4.0);
+  lo += 0.1293 * sinOfDegree(pluto * 5.0) - 0.0350 * cosOfDegree(pluto * 5.0);
+  lo += -0.0382 * sinOfDegree(pluto * 6.0) + 0.0309 * cosOfDegree(pluto * 6.0);
+  lo += 0.0204 * sinOfDegree(saturn - pluto) - 0.0100 * cosOfDegree(saturn - pluto);
+  lo += -0.0041 * sinOfDegree(saturn * 1.0) - 0.0051 * cosOfDegree(saturn * 1.0);
+  lo += -0.0060 * sinOfDegree(saturn + pluto) - 0.0033 * cosOfDegree(saturn + pluto);
 
   // Pluto's Latitude
-  bo += -5.4529 * sin4deg(pluto * 1.0) - 14.9749 * cos4deg(pluto * 1.0);
-  bo += 3.5278 * sin4deg(pluto * 2.0) + 1.6728 * cos4deg(pluto * 2.0);
-  bo += -1.0507 * sin4deg(pluto * 3.0) + 0.3276 * cos4deg(pluto * 3.0);
-  bo += 0.1787 * sin4deg(pluto * 4.0) - 0.2922 * cos4deg(pluto * 4.0);
-  bo += 0.0187 * sin4deg(pluto * 5.0) + 0.1003 * cos4deg(pluto * 5.0);
-  bo += -0.0307 * sin4deg(pluto * 6.0) - 0.0258 * cos4deg(pluto * 6.0);
-  bo += 0.0049 * sin4deg(saturn - pluto) + 0.0112 * cos4deg(saturn - pluto);
-  bo += 0.0020 * sin4deg(saturn + pluto) - 0.0008 * cos4deg(saturn + pluto);
+  bo += -5.4529 * sinOfDegree(pluto * 1.0) - 14.9749 * cosOfDegree(pluto * 1.0);
+  bo += 3.5278 * sinOfDegree(pluto * 2.0) + 1.6728 * cosOfDegree(pluto * 2.0);
+  bo += -1.0507 * sinOfDegree(pluto * 3.0) + 0.3276 * cosOfDegree(pluto * 3.0);
+  bo += 0.1787 * sinOfDegree(pluto * 4.0) - 0.2922 * cosOfDegree(pluto * 4.0);
+  bo += 0.0187 * sinOfDegree(pluto * 5.0) + 0.1003 * cosOfDegree(pluto * 5.0);
+  bo += -0.0307 * sinOfDegree(pluto * 6.0) - 0.0258 * cosOfDegree(pluto * 6.0);
+  bo += 0.0049 * sinOfDegree(saturn - pluto) + 0.0112 * cosOfDegree(saturn - pluto);
+  bo += 0.0020 * sinOfDegree(saturn + pluto) - 0.0008 * cosOfDegree(saturn + pluto);
 
   // Pluto's Radius Vector
-  ro += 6.6865 * sin4deg(pluto * 1.0) + 6.8952 * cos4deg(pluto * 1.0);
-  ro += -1.1828 * sin4deg(pluto * 2.0) - 0.0332 * cos4deg(pluto * 2.0);
-  ro += 0.1593 * sin4deg(pluto * 3.0) - 0.1439 * cos4deg(pluto * 3.0);
-  ro += -0.0018 * sin4deg(pluto * 4.0) + 0.0483 * cos4deg(pluto * 4.0);
-  ro += -0.0065 * sin4deg(pluto * 5.0) - 0.0085 * cos4deg(pluto * 5.0);
-  ro += 0.0031 * sin4deg(pluto * 6.0) - 0.0006 * cos4deg(pluto * 6.0);
-  ro += -0.0006 * sin4deg(saturn - pluto) - 0.0022 * cos4deg(saturn - pluto);
-  ro += 0.0005 * sin4deg(saturn * 1.0) - 0.0004 * cos4deg(saturn * 1.0);
-  ro += -0.0002 * sin4deg(saturn + pluto);
+  ro += 6.6865 * sinOfDegree(pluto * 1.0) + 6.8952 * cosOfDegree(pluto * 1.0);
+  ro += -1.1828 * sinOfDegree(pluto * 2.0) - 0.0332 * cosOfDegree(pluto * 2.0);
+  ro += 0.1593 * sinOfDegree(pluto * 3.0) - 0.1439 * cosOfDegree(pluto * 3.0);
+  ro += -0.0018 * sinOfDegree(pluto * 4.0) + 0.0483 * cosOfDegree(pluto * 4.0);
+  ro += -0.0065 * sinOfDegree(pluto * 5.0) - 0.0085 * cosOfDegree(pluto * 5.0);
+  ro += 0.0031 * sinOfDegree(pluto * 6.0) - 0.0006 * cosOfDegree(pluto * 6.0);
+  ro += -0.0006 * sinOfDegree(saturn - pluto) - 0.0022 * cosOfDegree(saturn - pluto);
+  ro += 0.0005 * sinOfDegree(saturn * 1.0) - 0.0004 * cosOfDegree(saturn * 1.0);
+  ro += -0.0002 * sinOfDegree(saturn + pluto);
 
   var res = [lo, bo, ro];
   return res;
@@ -810,15 +789,14 @@ List<double> calculatePositionOfPlutoObspm(T) {
 
   // my( $L, $opi, $omg, $i, $e, $a ) = convertOrbitalElement( $a, $l, $h, $k, $p, $q );
   var orbitalElements = convertOrbitalElement(a, l, h, k, p, q);
-  return orbitWork(orbitalElements[0], orbitalElements[1], orbitalElements[2],
-      orbitalElements[3], orbitalElements[4], orbitalElements[5]);
+  return orbitWork(orbitalElements[0], orbitalElements[1], orbitalElements[2], orbitalElements[3], orbitalElements[4], orbitalElements[5]);
 }
 
 double calculateSolarVelocity(julianDate) {
   var T = (julianDate - 2451545.0) / 365250.0;
   var velocity = 3548.330;
 
-  velocity += 118.568 * sin4deg(87.5287 + 359993.7286 * T);
+  velocity += 118.568 * sinOfDegree(87.5287 + 359993.7286 * T);
   return velocity / 3600.0;
 }
 
@@ -860,20 +838,20 @@ double calculateLunarVelocity(julianDate) {
   mf[3] = mod360(mf[3]);
 
   velocity = 13.176397;
-  velocity += 1.434006 * cos4deg(mf[2]);
-  velocity += 0.280135 * cos4deg(2.0 * mf[0]);
-  velocity += 0.251632 * cos4deg(2.0 * mf[0] - mf[2]);
-  velocity += 0.097420 * cos4deg(2.0 * mf[2]);
-  velocity -= 0.052799 * cos4deg(2.0 * mf[3]);
-  velocity += 0.034848 * cos4deg(2.0 * mf[0] + mf[2]);
-  velocity += 0.018732 * cos4deg(2.0 * mf[0] - mf[1]);
-  velocity += 0.010316 * cos4deg(2.0 * mf[0] - mf[1] - mf[2]);
-  velocity += 0.008649 * cos4deg(mf[1] - mf[2]);
-  velocity -= 0.008642 * cos4deg(2.0 * mf[3] + mf[2]);
-  velocity -= 0.007471 * cos4deg(mf[1] + mf[2]);
-  velocity -= 0.007387 * cos4deg(mf[0]);
-  velocity += 0.006864 * cos4deg(3.0 * mf[2]);
-  velocity += 0.006650 * cos4deg(4.0 * mf[0] - mf[2]);
+  velocity += 1.434006 * cosOfDegree(mf[2]);
+  velocity += 0.280135 * cosOfDegree(2.0 * mf[0]);
+  velocity += 0.251632 * cosOfDegree(2.0 * mf[0] - mf[2]);
+  velocity += 0.097420 * cosOfDegree(2.0 * mf[2]);
+  velocity -= 0.052799 * cosOfDegree(2.0 * mf[3]);
+  velocity += 0.034848 * cosOfDegree(2.0 * mf[0] + mf[2]);
+  velocity += 0.018732 * cosOfDegree(2.0 * mf[0] - mf[1]);
+  velocity += 0.010316 * cosOfDegree(2.0 * mf[0] - mf[1] - mf[2]);
+  velocity += 0.008649 * cosOfDegree(mf[1] - mf[2]);
+  velocity -= 0.008642 * cosOfDegree(2.0 * mf[3] + mf[2]);
+  velocity -= 0.007471 * cosOfDegree(mf[1] + mf[2]);
+  velocity -= 0.007387 * cosOfDegree(mf[0]);
+  velocity += 0.006864 * cosOfDegree(3.0 * mf[2]);
+  velocity += 0.006650 * cosOfDegree(4.0 * mf[0] - mf[2]);
 
   return velocity;
 }
@@ -895,46 +873,46 @@ List<double> calculatePositionOfLuna(julianDate) {
   l1 = mod360(357.5291092 + 0.98560028 * d - 0.0001536667 * T * T);
 
   dh = omg;
-  dh -= 1.4978 * sin4deg(2.0 * (D - F));
-  dh -= 0.1500 * sin4deg(l1);
-  dh -= 0.1225 * sin4deg(2.0 * D);
-  dh += 0.1175 * sin4deg(2.0 * F);
-  dh -= 0.0800 * sin4deg(2.0 * (l - F));
+  dh -= 1.4978 * sinOfDegree(2.0 * (D - F));
+  dh -= 0.1500 * sinOfDegree(l1);
+  dh -= 0.1225 * sinOfDegree(2.0 * D);
+  dh += 0.1175 * sinOfDegree(2.0 * F);
+  dh -= 0.0800 * sinOfDegree(2.0 * (l - F));
   dh = mod360(dh);
 
   lt = opi + 180.0;
-  lt -= 15.4469 * sin4deg(2.0 * D - l);
-  lt -= 9.6419 * sin4deg(2.0 * (D - l));
-  lt -= 2.7200 * sin4deg(l);
-  lt += 2.6069 * sin4deg(4.0 * D - 3.0 * l);
-  lt += 2.0847 * sin4deg(4.0 * D - 2.0 * l);
-  lt += 1.4772 * sin4deg(2.0 * D + l);
-  lt += 0.9678 * sin4deg(4.0 * (D - l));
-  lt -= 0.9412 * sin4deg(2.0 * D - l1 - l);
-  lt -= 0.7028 * sin4deg(6.0 * D - 4.0 * l);
-  lt -= 0.6600 * sin4deg(2.0 * D);
-  lt -= 0.5764 * sin4deg(2.0 * D - 3.0 * l);
-  lt -= 0.5231 * sin4deg(2.0 * l);
-  lt -= 0.4822 * sin4deg(6.0 * D - 5.0 * l);
-  lt += 0.4517 * sin4deg(l1);
-  lt -= 0.3806 * sin4deg(6.0 * D - 3.0 * l);
+  lt -= 15.4469 * sinOfDegree(2.0 * D - l);
+  lt -= 9.6419 * sinOfDegree(2.0 * (D - l));
+  lt -= 2.7200 * sinOfDegree(l);
+  lt += 2.6069 * sinOfDegree(4.0 * D - 3.0 * l);
+  lt += 2.0847 * sinOfDegree(4.0 * D - 2.0 * l);
+  lt += 1.4772 * sinOfDegree(2.0 * D + l);
+  lt += 0.9678 * sinOfDegree(4.0 * (D - l));
+  lt -= 0.9412 * sinOfDegree(2.0 * D - l1 - l);
+  lt -= 0.7028 * sinOfDegree(6.0 * D - 4.0 * l);
+  lt -= 0.6600 * sinOfDegree(2.0 * D);
+  lt -= 0.5764 * sinOfDegree(2.0 * D - 3.0 * l);
+  lt -= 0.5231 * sinOfDegree(2.0 * l);
+  lt -= 0.4822 * sinOfDegree(6.0 * D - 5.0 * l);
+  lt += 0.4517 * sinOfDegree(l1);
+  lt -= 0.3806 * sinOfDegree(6.0 * D - 3.0 * l);
 
   var luna = [dh, lt];
   return luna;
 }
 
 List<double> calculateGeoPoint(lst, la, obl) {
-  var mcX = sin4deg(lst);
-  var mcY = cos4deg(lst) * cos4deg(obl);
+  var mcX = sinOfDegree(lst);
+  var mcY = cosOfDegree(lst) * cosOfDegree(obl);
   var mc = mod360(atan2(mcX, mcY) / degreesToRadians);
 
   if (mc < 0.0) {
     mc += 360.0;
   }
 
-  var ascX = cos4deg(lst);
-  var ascY = -(sin4deg(obl) * tan4deg(la));
-  ascY -= cos4deg(obl) * sin4deg(lst);
+  var ascX = cosOfDegree(lst);
+  var ascY = -(sinOfDegree(obl) * tanOfDegree(la));
+  ascY -= cosOfDegree(obl) * sinOfDegree(lst);
 
   var asc = mod360(atan2(ascX, ascY) / degreesToRadians);
 
@@ -1020,8 +998,7 @@ double calculateJulianDate(year, month, day, hour, minute) {
   // �����̏�
   var y0 = (month > 2) ? year : (year - 1);
   var m0 = (month > 2) ? month : (month + 12);
-  num julianDate =
-      (365.25 * y0).floor() + (y0 / 400).floor() - (y0 / 100).floor();
+  num julianDate = (365.25 * y0).floor() + (y0 / 400).floor() - (y0 / 100).floor();
   julianDate += (30.59 * (m0 - 2)).floor() + day;
   julianDate += ((hour - 9) * 60.0 + minute) / 1440.0 + 1721088.5;
 
@@ -1140,26 +1117,26 @@ List<double> convertGeocentric(earthCoor, planetCoor) {
   var rg = sqrt(xg * xg + yg * yg + zg * zg);
   var lg = atan2(yg, xg) / degreesToRadians;
   if (lg < 0.0) lg += 360.0;
-  var bg = asin4deg(zg / rg);
+  var bg = asinOfDegree(zg / rg);
 
   var res = [lg, bg, rg];
   return res;
 }
 
 List<double> convertEquatorial(lon, lat, obl) {
-  var xs = cos4deg(lon) * cos4deg(lat);
-  var ys = sin4deg(lon) * cos4deg(lat);
-  var zs = sin4deg(lat);
+  var xs = cosOfDegree(lon) * cosOfDegree(lat);
+  var ys = sinOfDegree(lon) * cosOfDegree(lat);
+  var zs = sinOfDegree(lat);
 
   var xd = xs;
-  var yd = ys * cos4deg(obl) - zs * sin4deg(obl);
-  var zd = ys * sin4deg(obl) + zs * cos4deg(obl);
+  var yd = ys * cosOfDegree(obl) - zs * sinOfDegree(obl);
+  var zd = ys * sinOfDegree(obl) + zs * cosOfDegree(obl);
 
   double rightAscention = atan2(yd, xd) / degreesToRadians;
   if (rightAscention < 0.0) {
     rightAscention += 360.0;
   }
-  double declination = asin4deg(zd);
+  double declination = asinOfDegree(zd);
 
   var res = [rightAscention, declination];
   return res;
@@ -1177,18 +1154,18 @@ List<double> coordinateConvertFromJ2000(arg) {
   var theta = (((-0.041833 * T - 0.42665) * T + 2004.3109) * T) / 3600.0;
 
   // Step 1
-  x = sin4deg(zeta) * xs + cos4deg(zeta) * ys;
-  y = -cos4deg(zeta) * xs + sin4deg(zeta) * ys;
+  x = sinOfDegree(zeta) * xs + cosOfDegree(zeta) * ys;
+  y = -cosOfDegree(zeta) * xs + sinOfDegree(zeta) * ys;
   z = zs;
 
   // Step 2;
   // 	x = x;
-  y = 0 * x + cos4deg(theta) * y + sin4deg(theta) * z;
-  z = 0 * x - sin4deg(theta) * y + cos4deg(theta) * z;
+  y = 0 * x + cosOfDegree(theta) * y + sinOfDegree(theta) * z;
+  z = 0 * x - sinOfDegree(theta) * y + cosOfDegree(theta) * z;
 
   // Step 3
-  xd = -sin4deg(zz) * x - cos4deg(zz) * y;
-  yd = cos4deg(zz) * x - sin4deg(zz) * y;
+  xd = -sinOfDegree(zz) * x - cosOfDegree(zz) * y;
+  yd = cosOfDegree(zz) * x - sinOfDegree(zz) * y;
   zd = z;
 
   var res = [xd, yd, zd];
@@ -1198,18 +1175,17 @@ List<double> coordinateConvertFromJ2000(arg) {
 double calculateLocalSiderealTime(julianDate, hour, minute, longitude) {
   var jd0 = (julianDate - 0.5).floor() + 0.5;
   var T = (jd0 - 2451545.0) / 36525.0;
-  var ut = (julianDate - jd0) * 360.0 * 1.002737909350795;
-  if (ut < 0) ut += 360.0;
-  var globalSiderealTime =
-      0.279057273 + 100.0021390378 * T + 1.077591667e-06 * T * T;
+  var universalTime = (julianDate - jd0) * 360.0 * 1.002737909350795;
+  if (universalTime < 0) universalTime += 360.0;
+  var globalSiderealTime = 0.279057273 + 100.0021390378 * T + 1.077591667e-06 * T * T;
 
   globalSiderealTime = globalSiderealTime - globalSiderealTime.floor();
   globalSiderealTime *= 360.0;
 
-  var localSiderealTime = mod360(globalSiderealTime + ut + longitude);
+  var localSiderealTime = mod360(globalSiderealTime + universalTime + longitude);
   var dpsi = calculateNutation(julianDate);
   var eps = calculateOblique(julianDate);
-  localSiderealTime += dpsi * cos4deg(eps) / 3600.0;
+  localSiderealTime += dpsi * cosOfDegree(eps) / 3600.0;
   if (localSiderealTime < 0.0) localSiderealTime += 360.0;
 
   return localSiderealTime;
@@ -1221,42 +1197,42 @@ double calculateOblique(julianDate) {
   var ls = mod360(280.4665 + T * 36000.7698);
   var lm = mod360(218.3165 + T * 481267.8813);
   var e = 84381.448 + T * (-46.8150 + T * (-0.00059 + T * 0.001813));
-  var deps = 9.20 * cos4deg(1.0 * omg);
+  var deps = 9.20 * cosOfDegree(1.0 * omg);
 
-  deps += 0.57 * cos4deg(2.0 * ls);
-  deps += 0.10 * cos4deg(2.0 * lm);
-  deps += -0.09 * cos4deg(2.0 * omg);
+  deps += 0.57 * cosOfDegree(2.0 * ls);
+  deps += 0.10 * cosOfDegree(2.0 * lm);
+  deps += -0.09 * cosOfDegree(2.0 * omg);
 
   return (e + deps) / 3600.0;
 }
 
 const degreesToRadians = pi / 180.0;
 
-double sin4deg(X) {
+double sinOfDegree(X) {
   return sin(X * degreesToRadians);
 }
 
-double cos4deg(X) {
+double cosOfDegree(X) {
   return cos(X * degreesToRadians);
 }
 
-double tan4deg(X) {
+double tanOfDegree(X) {
   return tan(X * degreesToRadians);
 }
 
-double asin4deg(X) {
+double asinOfDegree(X) {
   return asin(X) / degreesToRadians;
 }
 
-double acos4deg(X) {
+double acosOfDegree(X) {
   return acos(X) / degreesToRadians;
 }
 
-double atan4deg(X) {
+double atanOfDegree(X) {
   return atan(X) / degreesToRadians;
 }
 
-double atan24deg(X, Y) {
+double atan2OfDegree(X, Y) {
   return atan2(X, Y) / degreesToRadians;
 }
 
@@ -1282,11 +1258,11 @@ double calculateNutation(julianDate) {
   var omg = mod360(125.00452 - T * 1934.136261);
   var ls = mod360(280.4665 + T * 36000.7698);
   var lm = mod360(218.3165 + T * 481267.8813);
-  var dpsi = -17.20 * sin4deg(1.0 * omg);
+  var dpsi = -17.20 * sinOfDegree(1.0 * omg);
 
-  dpsi += -1.32 * sin4deg(2.0 * ls);
-  dpsi += -0.23 * sin4deg(2.0 * lm);
-  dpsi += 0.21 * sin4deg(2.0 * omg);
+  dpsi += -1.32 * sinOfDegree(2.0 * ls);
+  dpsi += -0.23 * sinOfDegree(2.0 * lm);
+  dpsi += 0.21 * sinOfDegree(2.0 * omg);
 
   return dpsi;
 }
@@ -1305,7 +1281,7 @@ double calculateEqT(julianDate) {
   var e = 0.016708634 + T * (-0.000042037 - 0.0000001267 * T);
 
   var y = calculateOblique(julianDate);
-  y = tan4deg(y / 2.0);
+  y = tanOfDegree(y / 2.0);
   y = y * y;
 
   var E = y * sin(2 * l0) - 2.0 * e * sin(M);
@@ -1375,78 +1351,12 @@ double correctTDT(julianDate) {
     // formula C
     // last elements are sentinels.
     var tep = [1620, 1673, 1730, 1798, 1844, 1878, 1905, 1946, 1990, 2014];
-    var tk = [
-      3.670,
-      3.120,
-      2.495,
-      1.925,
-      1.525,
-      1.220,
-      0.880,
-      0.455,
-      0.115,
-      0.000
-    ];
-    var ta0 = [
-      76.541,
-      10.872,
-      13.480,
-      12.584,
-      6.364,
-      -5.058,
-      13.392,
-      30.782,
-      55.281,
-      0.000
-    ];
-    var ta1 = [
-      -253.532,
-      -40.744,
-      13.075,
-      1.929,
-      11.004,
-      -1.701,
-      128.592,
-      34.348,
-      91.248,
-      0.000
-    ];
-    var ta2 = [
-      695.901,
-      236.890,
-      8.635,
-      60.896,
-      407.776,
-      -46.403,
-      -279.165,
-      46.452,
-      87.202,
-      0.000
-    ];
-    var ta3 = [
-      -1256.982,
-      -351.537,
-      -3.307,
-      -1432.216,
-      -4168.394,
-      -866.171,
-      -1282.050,
-      1295.550,
-      -3092.565,
-      0.000
-    ];
-    var ta4 = [
-      627.152,
-      36.612,
-      -128.294,
-      3129.071,
-      7561.686,
-      5917.585,
-      4039.490,
-      -3210.913,
-      8255.422,
-      0.000
-    ];
+    var tk = [3.670, 3.120, 2.495, 1.925, 1.525, 1.220, 0.880, 0.455, 0.115, 0.000];
+    var ta0 = [76.541, 10.872, 13.480, 12.584, 6.364, -5.058, 13.392, 30.782, 55.281, 0.000];
+    var ta1 = [-253.532, -40.744, 13.075, 1.929, 11.004, -1.701, 128.592, 34.348, 91.248, 0.000];
+    var ta2 = [695.901, 236.890, 8.635, 60.896, 407.776, -46.403, -279.165, 46.452, 87.202, 0.000];
+    var ta3 = [-1256.982, -351.537, -3.307, -1432.216, -4168.394, -866.171, -1282.050, 1295.550, -3092.565, 0.000];
+    var ta4 = [627.152, 36.612, -128.294, 3129.071, 7561.686, 5917.585, 4039.490, -3210.913, 8255.422, 0.000];
 
     var i = 0;
     for (var j = 0; j < tep.length; j++) {
@@ -1479,11 +1389,9 @@ double correctTDT(julianDate) {
 
 double advanceDate(date, step) {
   List<int> decodedDate = decodeDate(date);
-  int julianDateZ =
-      calculateJulianDateZ(decodedDate[0], decodedDate[1], decodedDate[2]);
+  int julianDateZ = calculateJulianDateZ(decodedDate[0], decodedDate[1], decodedDate[2]);
   List<int> convertedCalendar = convertCalendar(julianDateZ + step);
-  double encodedDate = encodeDate(
-      convertedCalendar[0], convertedCalendar[1], convertedCalendar[2]);
+  double encodedDate = encodeDate(convertedCalendar[0], convertedCalendar[1], convertedCalendar[2]);
 
   return encodedDate;
 }
