@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'widget_factory.dart';
 part './data.dart';
 
 void main() {
@@ -102,6 +103,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+    var textTheme = Theme.of(context).textTheme;
+    var symbol = iChing[_counter];
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -130,83 +134,32 @@ class _MyHomePageState extends State<MyHomePage> {
           // ,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('${iChing[_counter].number}. ${iChing[_counter].name}',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline4),
-            Text(
-                '${iChing[_counter].externaTrigram().symbol}${iChing[_counter].internaTrigram().symbol} ${iChing[_counter].externalZodiac().symbol}${iChing[_counter].internalZodiac().symbol}',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline5),
-            Text('External Trigram Details',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.subtitle2),
-            Text(iChing[_counter].externaTrigram().fullTitle(),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption),
-            Text('Internal Trigram Details',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.subtitle2),
-            Text(iChing[_counter].internaTrigram().fullTitle(),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption),
-            Text('External Zodiac Details (Sun Sign)',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.subtitle2),
-            Text(iChing[_counter].externalZodiac().fullTitle(),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption),
-            Text(iChing[_counter].externalZodiac().planetDetails(),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption),
-            Text('Internal Zodiac Details (Rising Sign)',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.subtitle2),
-            Text(iChing[_counter].internalZodiac().fullTitle(),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption),
-            Text(iChing[_counter].internalZodiac().planetDetails(),
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption),
-            Text('Meaning',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.subtitle2),
-            Text(iChing[_counter].meaning,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption),
-            Text(' ', style: Theme.of(context).textTheme.caption),
-            Text('Commentary',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.subtitle2),
-            Text(
-                '${iChing[_counter].externalZodiac().timeEnergy()} externally. ${iChing[_counter].internalZodiac().timeEnergy()} internally.',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption),
-            Text(iChing[_counter].commentary,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption),
-            Text(' ', style: Theme.of(context).textTheme.caption),
+            buildText('${symbol.number}. ${symbol.name}', textTheme.headline4, TextAlign.center),
+            buildText('${symbol.externaTrigram().symbol}${symbol.internaTrigram().symbol} ${symbol.externalZodiac().symbol}${symbol.internalZodiac().symbol}', textTheme.headline5, TextAlign.center),
+            buildText('External Trigram Details', textTheme.subtitle2, TextAlign.center),
+            buildText(symbol.externaTrigram().fullTitle(), textTheme.caption, TextAlign.center),
+            buildText('Internal Trigram Details', textTheme.subtitle2, TextAlign.center),
+            buildText(symbol.internaTrigram().fullTitle(), textTheme.caption, TextAlign.center),
+            buildText('External Zodiac Details (Sun Sign)', textTheme.subtitle2, TextAlign.center),
+            buildText(symbol.externalZodiac().fullTitle(), textTheme.caption, TextAlign.center),
+            buildText(symbol.externalZodiac().planetDetails(), textTheme.caption, TextAlign.center),
+            buildText('Internal Zodiac Details (Rising Sign)', textTheme.subtitle2, TextAlign.center),
+            buildText(symbol.internalZodiac().fullTitle(), textTheme.caption, TextAlign.center),
+            buildText(symbol.internalZodiac().planetDetails(), textTheme.caption, TextAlign.center),
+            buildText('Meaning', textTheme.subtitle2, TextAlign.center),
+            buildText(symbol.meaning, textTheme.caption, TextAlign.center),
+            buildText('Commentary', textTheme.subtitle2, TextAlign.center),
+            buildText('${symbol.externalZodiac().timeEnergy()} externally. ${symbol.internalZodiac().timeEnergy()} internally.', textTheme.caption, TextAlign.center),
+            Padding(padding: const EdgeInsets.symmetric(horizontal: 15.0), child: Text(iChing[_counter].commentary, textAlign: TextAlign.center, style: Theme.of(context).textTheme.caption)),
+            buildText(' ', textTheme.caption, TextAlign.center),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-              ElevatedButton(
-                onPressed: _decrementCounter,
-                child: const Text('Previous'),
-              ),
+              buildElevatedButton('Previous', _decrementCounter),
               const SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  // Respond to button press
-                },
-                child: const Text('Now'),
-              ),
+              buildElevatedButton('Now', () {}),
               const SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: _randomCounter,
-                child: const Text('Random'),
-              ),
+              buildElevatedButton('Random', _randomCounter),
               const SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: _incrementCounter,
-                child: const Text('Next'),
-              ),
+              buildElevatedButton('Next', _incrementCounter),
             ])
           ],
         ),

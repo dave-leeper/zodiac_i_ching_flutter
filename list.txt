@@ -1,0 +1,145 @@
+55, Abundance
+104, Acceptance
+8, Accord
+144, Achievement,
+22, Adornment
+35, Advance
+63, Already Accomplished
+69, Ambition
+124, Appreciation
+7, An Army
+72, Assertive
+125, Assuage
+120, Aversion
+121, Awkwardness
+21, Biting Through
+50, The Cauldron
+49, Change
+140, Clear Heart
+91, Competition
+57, Conformity
+29, Constant Pitfalls
+139, Consummation
+6, Contention
+127, Contentment
+1, The Creative
+135, Cultivation
+114, Dauntless
+90, Deception
+43, Decisiveness
+92, Dedication
+111, Despondent
+142, Determination
+128, Devotion
+3, Difficulty
+59, Dispersal
+101, Dispute
+18, Disruption
+113, Dissipate
+134, Domination
+76, Enchantment
+126, Endurance
+137, Evaluation
+108, Excitement
+47, Exhaustion
+25, Fidelity
+30, Fire
+17, Following
+123, Friendship
+45, Gathering
+79, Glamour
+71, Good Fortune
+93, Good Sport
+53, Gradual Progress
+26, Great Buildup
+78, Great Conviction
+14, Great Possession
+81, Growth
+39, Halting
+16, Happiness
+75, Hesitation
+15, Humility
+42, Increase
+67, Individuality
+65, Influence
+36, Injury to the Enlightened
+4, Innocence
+119, Innovation
+133, Insight
+98, Instinct
+73, Instincts
+105, Interest
+110, Intrigue
+138, Judgement
+106, Listless
+117, Man
+115, Mastering
+77, Magnetism
+129, Maintaining
+44, Meeting
+85, Misconception
+52, Mountains
+27, Nourishment
+9, Nurture of the Small
+122, Obligation
+20, Observing
+12, Obstruction
+38, Opposition
+100, Overindulgent
+70, Overpowering
+19, Overseeing
+74, Passion
+131, Peace
+130, Penetration
+37, People in the Home
+107, Performance
+32, Persistance
+58, Pleasing
+109, Praise
+28, Predominance of the Great
+62, Predominance of the Small
+80, Prepare
+82, Proficiency
+94, Protect
+34, The Power of Greatness
+103, Realism
+2, The Receptive
+83, Recognition
+87, Rectify
+41, Reduction
+118, Refinement
+60, Regulation
+141, Rest
+97, Restoring
+24, Return
+46, Rising
+13, Sameness With People
+31, Sensitivity
+95, Scandal
+99, Solemn
+40, Solution
+136, Stimulation
+112, Storm
+132, Strength
+23, Stripping Away
+116, Superfluous
+86, Tension
+51, Thunder
+102, Tradition
+11, Tranquillity
+88, Transform
+56, Travel
+10, Treading
+61, Truthfulness in the Center
+96, Uncertainty
+64, Unfinished
+84, Unfolding
+89, United
+68, Valor
+66, Virtue
+5, Waiting
+48, The Well
+33, Withdrawal
+143, Work
+54, A Young Woman Going to Marry
+

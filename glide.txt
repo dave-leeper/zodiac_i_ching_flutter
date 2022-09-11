@@ -1,0 +1,108 @@
+0, Causing Change, 0 Dao, -1 Base
+1, Premordial Energy, 1 Vitality, -1 Base, A, Water
+2, Radiance, 2 Spirit, -1 Base, B, Fire
+3, Awareness, 3 Essence, -1 Base, C, Wood
+4, Five Senses, 4 Sense, -1 Base, D, Metal
+5, Will, 5 Will, -1 Base, E, Earth
+6, Energy, 6 Energy, -1 Base, F, Faraday Constant
+7, Simplicity, 7 Uncarved Block, -1 Base, G, Gravity
+8, Doing Nondoing, 8 Wú Wéi, -1 Base, H, Plank's Constant
+9, Frugality, 9 Spirit Above Energy, -1 Base, I
+10, Extravagance, 10 Energy Above Spirit, -1 Base, J
+11, Discipline, 11 Spirit Above Vitality, -1 Base, K
+12, Pleasure, 12 Vitality Above Spirit, -1 Base, L
+13, Industrious, 13 Energy Above Vitality, -1 Base, M
+14, Dreamer, 14 Vitality Above Energy, -1 Base, N
+15, Compassion, 15 Spirit In Energy, -1 Base, O
+16, Competition, 16 Energy In Spirit, -1 Base, P
+17, Intimacy, 17 Spirit In Vitality, -1 Base, Q
+18, Seeking, 18 Vitality In Spirit, -1 Base, R
+19, Action, 19 Energy In Vitality, -1 Base, S
+20, Serenity, 20 Vitality In Energy, -1 Base, T
+21, Modesty, 21 Spirit Below Energy, -1 Base, U
+22, Conceit, 22 Energy Below Spirit, -1 Base, V
+23, Needing, 23 Spirit Below Vitality, -1 Base, W
+24, Gratification, 24 Vitality Below Spirit, -1 Base, X
+25, Skillful, 25 Energy Below Vitality, -1 Base, Y
+26, Imprudent, 26 Vitality Below Energy, -1 Base, Z
+0, Great Way, 0 Dao, 0 Dao
+1, Stabilize, 1 Vitality, 0 Dao
+2, Ultimately Free, 2 Spirit, 0 Dao
+3, Beginningless, 3 Essence, 0 Dao
+4, Shadow Play, 4 Sense, 0 Dao
+5, Director, 5 Earth, 0 Dao
+6, Mysterious Pass, 6 Energy, 0 Dao
+7, Uncontrived, 7 Uncarved Block, 0 Dao
+8, Spontaneity, 8 Wú Wéi, 0 Dao
+9, Adapt, 9 Spirit Above Energy, 0 Dao
+10, Induldge, 10 Energy Above Spirit, 0 Dao
+11, Ascertain, 11 Spirit Above Vitality, 0 Dao
+12, Entertained, 12 Vitality Above Spirit, 0 Dao
+13, Profit, 13 Energy Above Vitality, 0 Dao
+14, Fantasize, 14 Vitality Above Energy, 0 Dao
+15, Assist, 15 Spirit In Energy, 0 Dao
+16, Oppose, 16 Energy In Spirit, 0 Dao
+17, Fraternize, 17 Spirit In Vitality, 0 Dao
+18, Question, 18 Vitality In Spirit, 0 Dao
+19, Proceed, 19 Energy In Vitality, 0 Dao
+20, Statisfied, 20 Vitality In Energy, 0 Dao
+21, Evaluate, 21 Spirit Below Energy, 0 Dao
+22, Pretention, 22 Energy Below Spirit, 0 Dao
+23, Loss, 23 Spirit Below Vitality, 0 Dao
+24, Gain, 24 Vitality Below Spirit, 0 Dao
+25, Integrate, 25 Energy Below Vitality, 0 Dao
+26, Overextend, 26 Vitality Below Energy, 0 Dao
+27, Seduce, 0 Dao, 1 Vitality
+28, Attraction, 1 Vitality, 1 Vitality
+29, Influence, 2 Spirit, 1 Vitality
+30, Intertwine, 3 Essence, 1 Vitality
+31, Purify, 4 Sense, 1 Vitality
+31, Submission, 5 Will, 1 Vitality
+32, Wild, 6 Energy, 1 Vitality
+33, Primal, 7 Uncarved Block, 1 Vitality
+34, Stimulate, 8 Wú Wéi, 1 Vitality
+35, Composure, 9 Spirit Above Energy, 1 Vitality
+36, Excitement, 10 Energy Above Spirit, 1 Vitality
+37, Restraint, 11 Spirit Above Vitality, 1 Vitality
+38, Indulgence, 12 Vitality Above Spirit, 1 Vitality
+39, Commitment, 13 Energy Above Vitality, 1 Vitality
+40, Lotus Eater, 14 Vitality Above Energy, 1 Vitality
+41, Tolerance, 15 Spirit In Energy, 1 Vitality
+42, Ruthlessness, 16 Energy In Spirit, 1 Vitality
+43, Consideration, 17 Spirit In Vitality, 1 Vitality
+44, Detachment, 18 Vitality In Spirit, 1 Vitality
+45, Zeal, 19 Energy In Vitality, 1 Vitality
+46, Repose, 20 Vitality In Energy, 1 Vitality
+47, Discretion, 21 Spirit Below Energy, 1 Vitality
+48, Excess, 22 Energy Below Spirit, 1 Vitality
+49, Economy, 23 Spirit Below Vitality, 1 Vitality
+50, Revelry, 24 Vitality Below Spirit, 1 Vitality
+51, Refinement, 25 Energy Below Vitality, 1 Vitality
+52, Setback, 26 Vitality Below Energy, 1 Vitality
+53, Illuminate, 0 Dao, 2 Spirit
+54, Fearful, 1 Vitality, 2 Spirit
+55, Inspiration, 2 Spirit, 2 Spirit
+56, Creativity, 3 Essence, 2 Spirit
+57, Righteousness, 4 Sense, 2 Spirit
+58, Focused, 5 Will, 2 Spirit
+59, Challenging, 6 Energy, 2 Spirit
+60, Dutiful, 7 Uncarved Block, 2 Spirit
+61, Masterful, 8 Wú Wéi, 2 Spirit
+62, Contemplation, 9 Spirit Above Energy, 2 Spirit
+63, Disregard, 10 Energy Above Spirit, 2 Spirit
+64, Thoughtfulness, 11 Spirit Above Vitality, 2 Spirit
+65, Carelessness, 12 Vitality Above Spirit, 2 Spirit
+66, Prudence, 13 Energy Above Vitality, 2 Spirit
+67, Permissiveness, 14 Vitality Above Energy, 2 Spirit
+68, Demonstration, 15 Spirit In Energy, 2 pirit
+69, Debate, 16 Energy In Spirit, 2 Spirit
+70, Concordance, 17 Spirit In Vitality, 2 Spirit
+71, Confusion, 18 Vitality In Spirit, 2 Spirit
+72, Resolve, 19 Energy In Vitality, 2 Spirit
+73, Pause, 20 Vitality In Energy, 2 Spirit
+74, Learn, 21 Spirit Below Energy, 2 Spirit
+75, Brag, 22 Energy Below Spirit, 2 Spirit
+76, Undecided, 23 Spirit Below Vitality, 2 Spirit
+77, Resolved, 24 Vitality Below Spirit, 2 Spirit
+78, Ambitious, 25 Energy Below Vitality, 2 Spirit
+79, Lackadaisical, 26 Vitality Below Energy, 2 Spirit

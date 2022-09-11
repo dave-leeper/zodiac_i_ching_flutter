@@ -1,5 +1,5 @@
+import 'package:flutter_test/flutter_test.dart';
 import 'package:zodiac_i_ching/planets.dart';
-import 'package:test_api/test_api.dart';
 
 bool kindaSortaEqual(double value1, double value2, double tolerance) {
   if (value1.isInfinite || value2.isInfinite) {
@@ -24,25 +24,6 @@ const hour = 8;
 const minute = 44;
 const longitude = -112.2653190067936;
 const latitude = 33.58238299981991;
-const localSiderealTime = 192.32252224509193;
-const oblique = 23.43804171005144;
-const angle = [266.00167031046084, 193.392314254203];
-// EXPECTED RESULTS
-const julianDate = 2459790.92;
-const sun = 127.25;
-const moon = 145.94;
-const mercury = 141.47;
-const venus = 104.96;
-const mars = 47.05;
-const jupiter = 8.72;
-const saturn = 323.02;
-const uranus = 48.65;
-const neptune = 355.18;
-const pluto = 297.11;
-const lunarNode = 48.93;
-const apogee = 108.95;
-const ascendant = 95.19;
-const midHeaven = 348.05;
 
 void main() {
   group('Planets', (() {
